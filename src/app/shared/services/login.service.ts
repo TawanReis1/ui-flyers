@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class LoginService {
   isAuthenticated = new EventEmitter<Boolean>();
 
   constructor(private http: HttpClient) {
-    this.url = "http://localhost:4000/api/v1";
+    this.url = environment.flierApi;
   }
 
   async getAuthToken(user) {

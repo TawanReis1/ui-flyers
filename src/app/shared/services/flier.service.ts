@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlierService {
-  url: string = "http://localhost:4000/api/v1/flier";
+  url: string;
   authInformations: any;
 
   constructor(private http: HttpClient) {
+    this.url = environment.flierApi;
     this.authInformations = localStorage.getItem('auth');
     this.authInformations = JSON.parse(this.authInformations);
   }
@@ -19,7 +21,7 @@ export class FlierService {
       params = params.append(param, query[param]);
     });
 
-    return this.http.get(this.url, {
+    return this.http.get(`${this.url}/flier`, {
       headers: new HttpHeaders({
         "x-access-token": this.authInformations.accessToken
       }),
@@ -29,7 +31,7 @@ export class FlierService {
   }
 
   async getById(id) {
-    return this.http.get(`${this.url}/${id}`, {
+    return this.http.get(`${this.url}/flier/${id}`, {
       headers: new HttpHeaders({
         "x-access-token": this.authInformations.accessToken
       })
@@ -38,7 +40,7 @@ export class FlierService {
   }
 
   async create(flier) {
-    return this.http.post(this.url, flier, {
+    return this.http.post(`${this.url}/flier`, flier, {
       headers: new HttpHeaders({
         "x-access-token": this.authInformations.accessToken
       })
@@ -48,7 +50,7 @@ export class FlierService {
   }
 
   async update(body, id) {
-    return this.http.put(`${this.url}/${id} `, body, {
+    return this.http.put(`${this.url}/flier/${id} `, body, {
       headers: new HttpHeaders({
         "x-access-token": this.authInformations.accessToken
       })
@@ -58,7 +60,7 @@ export class FlierService {
   }
 
   async delete(id) {
-    return this.http.delete(`${this.url}/${id}`, {
+    return this.http.delete(`${this.url}/flier/${id}`, {
       headers: new HttpHeaders({
         "x-access-token": this.authInformations.accessToken
       })
