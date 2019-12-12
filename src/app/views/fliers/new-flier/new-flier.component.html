@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h5>Informações Gerais</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-6 m-b-15">
+        <label for="name">Nome da Campanha</label>
+        <input type="text" name="name" class="form-control input-sm" [(ngModel)]="flier.name">
+    </div>
+    <div class="col-lg-6 m-b-15">
+        <label for="client">Cliente</label>
+        <select name="client" class="form-control" [(ngModel)]="flier.clientId">
+            <option value=""></option>
+            <option *ngFor="let client of allClients" [value]="client._id">{{client?.name}}</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- <label for="address">Status</label>
+        <input type="text" name="address" class="form-control" [(ngModel)]="flier.status"> -->
+
+        <label for="status">Status</label>
+        <select name="status" class="form-control" [(ngModel)]="flier.status">
+            <option value="IN_PROGRESS" selected>Em andamento</option>
+            <option value="PAUSED">Pausado</option>
+            <!-- <option value="COMPLETED">Finalizado</option> -->
+        </select>
+    </div>
+    <div class="col-lg-4">
+        <label for="address">Display</label>
+        <input type="text" name="address" class="form-control" [(ngModel)]="flier.display">
+    </div>
+    <div class="col-lg-4">
+        <label for="name">Qtde. Total</label>
+        <input type="text" name="name" class="form-control input-sm" [(ngModel)]="flier.total">
+    </div>
+
+    <div class="col-lg-12" style="margin-top: 100px;">
+        <button (click)="createFlier()" class="pull-right btn btn-primary">Salvar</button>
+        <button (click)="cancel()" class="pull-right btn btn-secundary m-r-10">Cancelar</button>
+    </div>
+</div>

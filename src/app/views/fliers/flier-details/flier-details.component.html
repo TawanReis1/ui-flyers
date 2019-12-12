@@ -1,0 +1,80 @@
+<app-loader class="full-size" [condition]="isLoading"></app-loader>
+
+<div class="row" *ngIf="!isLoading">
+    <div class="col-lg-12">
+        <h5>Informações do Panfleto</h5>
+        <hr />
+    </div>
+    <div class="col-lg-4 m-b-30">
+        <label style="font-weight: 600;">Nome da Campanha</label><br>
+        <p>{{flier?.name}}</p>
+    </div>
+    <div class="col-lg-4 m-b-30">
+        <label for="status">Status</label>
+
+        <p>Cliente: {{flier?.clientId?.name}}</p>
+    </div>
+    <div class="col-lg-4">
+        <label for="status">Status</label>
+        <select name="status" class="form-control" [(ngModel)]="flier.status">
+            <option value="IN_PROGRESS">Em andamento</option>
+            <option value="PAUSED">Pausado</option>
+            <option value="COMPLETED">Finalizado</option>
+        </select>
+    </div>
+
+
+    <div class="col-lg-12">
+        <h5>Retirada do Material</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-4 m-b-10">
+        <label for="date">Data</label><br>
+        <dp-date-picker theme="dp-material" [config]="datePickerConfig" mode="daytime" [(ngModel)]="flier.withdrawDate">
+        </dp-date-picker>
+    </div>
+    <div class="col-lg-4 m-b-10">
+        <label for="quantityMaterial">Qtde. Material Retirado</label>
+        <input type="text" name="quantityMaterial" class="form-control" [(ngModel)]="flier.quantityFlier">
+    </div>
+    <div class="col-lg-4 m-b-10">
+        <label for="responsible">Responsável pela Entrega</label>
+        <input type="text" name="responsible" class="form-control" [(ngModel)]="flier.responsible">
+    </div>
+
+    <div class="col-lg-12 m-b-30">
+        <label for="observation">Observações</label>
+        <textarea class="form-control" name="observation" [(ngModel)]="flier.observation"></textarea>
+    </div>
+
+    <div class="col-lg-12">
+        <h5>Início da Distribuição</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-4 m-b-15">
+        <label for="date">Data</label><br>
+        <dp-date-picker theme="dp-material" [config]="datePickerConfig" mode="daytime"
+            [(ngModel)]="flier.startingDistributionDate"></dp-date-picker>
+    </div>
+
+
+    <div class="col-lg-12">
+        <h5>Término da Distribuição</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-4 m-b-15">
+        <label for="date">Data</label><br>
+        <dp-date-picker theme="dp-material" [config]="datePickerConfig" mode="daytime"
+            [(ngModel)]="flier.endingDistributionDate"></dp-date-picker>
+    </div>
+
+
+
+    <div class="col-lg-12" style="margin-top: 100px;">
+        <button (click)="updateFlier()" class="pull-right btn btn-primary">Salvar</button>
+        <button (click)="cancel()" class="pull-right btn btn-secundary m-r-10">Cancelar</button>
+    </div>
+</div>

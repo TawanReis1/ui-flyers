@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h5>Informações Gerais</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-4">
+        <label for="name">Nome</label>
+        <input type="text" name="name" class="form-control input-sm" [(ngModel)]="client.name">
+    </div>
+    <div class="col-lg-4">
+        <label for="personType">Tipo</label>
+        <select name="personType" class="form-control" [(ngModel)]="client.type">
+            <option value="PRIVATE_INDIVIDUAL" selected>Física</option>
+            <option value="LEGAL_ENTITY">Jurídica</option>
+        </select>
+    </div>
+    <div class="col-lg-4">
+        <label for="address">Endereço</label>
+        <input type="text" name="address" class="form-control" [(ngModel)]="client.address">
+    </div>
+
+    <div class="col-lg-12" style="margin-top: 100px;">
+        <h5>Informações de Contato</h5>
+        <hr />
+    </div>
+
+    <div class="col-lg-6">
+        <label for="phone">Telefone</label>
+        <input type="text" name="phone" class="form-control" [(ngModel)]="client.telephone">
+    </div>
+
+    <div class="col-lg-6">
+        <label for="name">E-mail</label>
+        <input type="email" name="name" class="form-control" [(ngModel)]="client.email">
+    </div>
+
+    <div class="col-lg-12" style="margin-top: 100px;">
+        <button (click)="createClient()" class="pull-right btn btn-primary">Salvar</button>
+        <button (click)="cancel()" class="pull-right btn btn-secundary m-r-10">Cancelar</button>
+    </div>
+</div>
