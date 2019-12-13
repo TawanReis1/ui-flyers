@@ -15,6 +15,7 @@ export class FlierDetailsComponent implements OnInit {
   flier: Flier = new Flier();
   flierInformations: any;
   id: String;
+  clientName: any;
   isLoading: Boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private flierService: FlierService, private toastr: ToastrHelper) { 
@@ -65,6 +66,7 @@ export class FlierDetailsComponent implements OnInit {
 
       this.flier = response['data'];
       this.flier.withdrawDate = treatedDate
+      this.clientName = this.flier.clientId['name'];
 
       this.isLoading = false;
 

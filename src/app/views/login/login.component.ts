@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   signSubmitted: Boolean = false;
   screen: string = 'login';
   auxPassword: string;
+  loading: Boolean = false;
 
   constructor(private loginService: LoginService, private router: Router, private toastr: ToastrHelper) { }
 
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   async login() {
     try {
+      this.loading = true;
       this.loginSubmitted = true;
 
       let validated = this.validateLoginFields();
@@ -41,8 +43,10 @@ export class LoginComponent implements OnInit {
 
       this.router.navigate(['/clients']);
       this.toastr.showSuccess('Login realizado', 'Sucesso');
+      this.loading = false;
 
     } catch (err) {
+      this.loading = false;
       this.toastr.showError('Erro ao realizar o login', 'Erro');
     }
   }

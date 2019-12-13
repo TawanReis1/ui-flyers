@@ -1,7 +1,8 @@
 export class Client {
-    name: string;
-    type: string;
-    address: string;
-    telephone: string;
-    email: string;
+    _id: String;
+    name: String;
+    type: String;
+    address: String;
+    telephone: String;
+    email: String;
 }

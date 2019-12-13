@@ -9,7 +9,8 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
+import { IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,12 +25,8 @@ import { AuthorizeGuard } from './shared/security/authorize-guard';
 import { LoaderComponent } from './shared/helpers/loader/loader.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 
-
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localePt)
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

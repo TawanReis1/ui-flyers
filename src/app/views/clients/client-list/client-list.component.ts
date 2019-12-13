@@ -97,7 +97,7 @@ export class ClientListComponent implements OnInit {
     }
   }
 
-  changeScreen(screen, id) {
+  changeScreen(screen, id = "") {
     try {
       if (screen === 'new') {
         this.router.navigate(['/clients/new/client']);

@@ -96,7 +96,7 @@ export class FlierListComponent implements OnInit {
     }
   }
 
-  changeScreen(screen, id) {
+  changeScreen(screen, id = "") {
     try {
       if (screen === 'new') {
         this.router.navigate(['/fliers/new/flier']);
