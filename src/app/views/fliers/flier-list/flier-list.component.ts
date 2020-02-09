@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Flier } from '../../../shared/classes/flier';
 import { FlierService } from '../../../shared/services/flier.service';
+import { ClientService } from '../../../shared/services/client.service';
 import { ToastrHelper } from 'src/app/shared/helpers/toastr';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
@@ -25,16 +26,47 @@ export class FlierListComponent implements OnInit {
   filterCashbackPercentage: string;
   filterStatus: string;
   datePickerConfig: any;
+  userInformations: any;
 
-  constructor(private router: Router, private flierService: FlierService, private toastr: ToastrHelper) { }
+  constructor(private router: Router, private flierService: FlierService, private clientService: ClientService, private toastr: ToastrHelper) { }
 
   async ngOnInit() {
-    await this.getFliers()
+    this.isLoading = true;
+    await this.delay(2000);
+    await this.getCurrentUser();
+    await this.getFliers();
   }
 
   async getFliers(filterFields = {}) {
     try {
+      let client;
       this.isLoading = true;
+
+      if (this.userInformations.data.type === 'NORMAL') {
+        client = await this.clientService.get({ page: this.page, limit: 10, filter_userId: this.userInformations.data._id });
+        client = client.data[0];
+
+        if (client) {
+          filterFields = { page: this.page, limit: 10, filter_clientId: client._id };
+        } else {
+          this.allFliers.meta = {
+            "currentPage": 1,
+            "itemsPerPage": 10,
+            "totalPages": 1,
+            "totalItems": 0
+
+          };
+
+          this.allFliers.data = []
+
+          this.isLoading = false;
+          return;
+        }
+      } else {
+        filterFields = { page: this.page, limit: 10 }
+      }
+
+
       if (Object.keys(filterFields).length === 0) {
         filterFields = { page: this.page, limit: 10 }
       }
@@ -50,6 +82,11 @@ export class FlierListComponent implements OnInit {
       this.toastr.showError('Erro ao listar as compras', 'Erro');
       throw err;
     }
+  }
+
+  async getCurrentUser() {
+    this.userInformations = localStorage.getItem('userInformations');
+    this.userInformations = JSON.parse(this.userInformations);
   }
 
   applyFilter() {
@@ -145,5 +182,14 @@ export class FlierListComponent implements OnInit {
 
   enterDetails(id) {
     this.router.navigate(['/fliers', id]);
+  }
+
+
+  delay(ms) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
+    });
   }
 }

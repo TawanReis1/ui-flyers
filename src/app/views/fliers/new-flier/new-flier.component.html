@@ -1,4 +1,6 @@
-<div class="row">
+<app-loader class="full-size" [condition]="isLoading"></app-loader>
+
+<div class="row" *ngIf="!isLoading">
     <div class="col-lg-12">
         <h5>Informações Gerais</h5>
         <hr />

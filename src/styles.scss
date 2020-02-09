@@ -5,6 +5,12 @@
 @import "~bootstrap/scss/mixins";
 @import "~ngx-toastr/toastr-bs4-alert";
 
+html, body {
+  min-height: 100%;
+  height: auto;
+  margin: 0;
+}
+
 #toast-container > div {
   opacity: 1;
 }
@@ -69,6 +75,10 @@
 
 .m-b-15 {
   margin-bottom: 15px;
+}
+
+.m-b-30 {
+  margin-bottom: 30px;
 }
 
 .p-t-70 {

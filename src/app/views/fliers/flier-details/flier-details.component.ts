@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlierService } from 'src/app/shared/services/flier.service';
 import { ToastrHelper } from 'src/app/shared/helpers/toastr';
 import * as moment from 'moment';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-flier-details',
@@ -17,8 +18,13 @@ export class FlierDetailsComponent implements OnInit {
   id: String;
   clientName: any;
   isLoading: Boolean = true;
-
-  constructor(private route: ActivatedRoute, private router: Router, private flierService: FlierService, private toastr: ToastrHelper) { 
+  clickedSetHour = {
+    retirada: false,
+    inicio_distribuicao: false,
+    termino_distribuicao: false,
+  };
+  
+  constructor(private route: ActivatedRoute, private router: Router, private flierService: FlierService, private toastr: ToastrHelper) {
     this.datePickerConfig = {
       firstDayOfWeek: 'su',
       monthFormat: 'MMM, YYYY',
@@ -62,10 +68,10 @@ export class FlierDetailsComponent implements OnInit {
     try {
       let response = await this.flierService.getById(id);
 
-      let treatedDate = moment(response['data'].withdrawDate).format('DD/MM/YYYY HH:mm');
+      // let treatedDate = moment(response['data'].withdrawDate).format('DD/MM/YYYY HH:mm');
 
       this.flier = response['data'];
-      this.flier.withdrawDate = treatedDate
+      // this.flier.withdrawDate = treatedDate
       this.clientName = this.flier.clientId['name'];
 
       this.isLoading = false;
@@ -81,12 +87,16 @@ export class FlierDetailsComponent implements OnInit {
     try {
       let acumData = Object.assign({}, this.flier);
 
-      acumData.withdrawDate = moment(this.flier.withdrawDate, 'DD/MM/YYYY').toISOString();
+      if (this.flier.withdrawDate && (!this.flier.quantityFlier || !this.flier.responsible)) {
+        throw ({treated_error: true, message: "Dados de retirada estão incompletos!"});
+      }
+
       acumData.quantityFlier = this.flier.quantityFlier;
       acumData.responsible = this.flier.responsible;
       acumData.observation = this.flier.observation;
-      acumData.startingDistributionDate = moment(this.flier.startingDistributionDate, 'DD/MM/YYYY').toISOString();
-      acumData.endingDistributionDate = moment(this.flier.endingDistributionDate, 'DD/MM/YYYY').toISOString();
+      acumData.withdrawDate = this.flier.withdrawDate;
+      acumData.startingDistributionDate = this.flier.startingDistributionDate;
+      acumData.endingDistributionDate = this.flier.endingDistributionDate;
 
       await this.flierService.update(acumData, this.id);
 
@@ -94,9 +104,51 @@ export class FlierDetailsComponent implements OnInit {
       this.router.navigate(['/fliers'])
 
     } catch (err) {
-      this.toastr.showError('Erro ao atualizar o panfleto', 'Erro');
+      if (err.treated_error) {
+        this.toastr.showError(err.message, 'Erro');
+      } else {
+        this.toastr.showError('Erro ao atualizar o panfleto', 'Erro');
+      }
 
       throw err;
+    }
+  }
+
+  setHour(origin) {
+    switch (origin) {
+      case 'retirada':
+        this.flier.withdrawDate = moment().format('YYYY-MM-DD HH:mm:ss');
+        this.clickedSetHour[origin] = true;
+
+        break;
+
+      case 'inicio_distribuicao':
+        this.flier.startingDistributionDate = moment().format('YYYY-MM-DD HH:mm:ss');
+        this.clickedSetHour[origin] = true;
+
+        break;
+
+      case 'termino_distribuicao':
+        this.flier.endingDistributionDate = moment().format('YYYY-MM-DD HH:mm:ss');
+        this.clickedSetHour[origin] = true;
+
+        break;
+    }
+  }
+
+  removeHour(origin) {
+    switch(origin) {
+      case 'retirada':
+        this.flier.withdrawDate = "";
+        break;
+
+      case 'inicio_distribuicao':
+        this.flier.startingDistributionDate = "";
+        break;
+
+      case 'termino_distribuicao':
+        this.flier.endingDistributionDate = "";
+        break;
     }
   }
 

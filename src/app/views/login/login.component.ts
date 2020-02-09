@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('auth', JSON.stringify(auth.data));
       EventEmitterService.get('login').emit(true);
 
-      this.router.navigate(['/clients']);
+      this.router.navigate(['/fliers']);
       this.toastr.showSuccess('Login realizado', 'Sucesso');
       this.loading = false;
 

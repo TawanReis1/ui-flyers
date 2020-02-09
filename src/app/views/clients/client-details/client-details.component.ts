@@ -29,7 +29,6 @@ export class ClientDetailsComponent implements OnInit {
       let response = await this.clientService.getById(this.id);
 
       this.client = response['data'];
-      console.log('this.client :', this.client);
       this.isLoading = false;
 
     } catch (err) {

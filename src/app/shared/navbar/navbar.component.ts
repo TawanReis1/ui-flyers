@@ -32,16 +32,20 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.getUserInformations();
+  async ngOnInit() {
+    await this.getUserInformations();
     this.getCurrentUrl();
   }
 
   async getUserInformations() {
     if (this.authInformations) {
       let user = jwt_decode(this.authInformations.accessToken);
-      this.userInformations = await this.userService.getById(user.id)
+      this.userInformations = await this.userService.getById(user.id);
       localStorage.setItem('userInformations', JSON.stringify(this.userInformations, null, 4));
+
+      if (this.userInformations.data.type === 'NORMAL') {
+        localStorage.setItem('isAdmin', 'false');
+      }
     }  
   }
 

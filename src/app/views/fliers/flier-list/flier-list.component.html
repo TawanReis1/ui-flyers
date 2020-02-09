@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <!-- <h3 class="pull-left">Clientes</h3> -->
-        <button type="button" class="btn btn-primary pull-right" (click)="changeScreen('new')">
+        <button type="button" *ngIf="userInformations?.data?.type == 'ADMIN' && !isLoading" class="btn btn-primary pull-right" (click)="changeScreen('new')">
             <i class="fas fa-plus m-r-10"></i>Novo Panfleto
         </button>
         <!-- <button type="button" class="btn btn-primary pull-right m-r-10" (click)="changeScreen('cashback')">

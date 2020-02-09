@@ -14,6 +14,7 @@ export class NewFlierComponent implements OnInit {
   flier: Flier = new Flier();
   allClients: any = [];
   datePickerConfig: any;
+  isLoading: Boolean = true;
 
   constructor(private router: Router ,private toastr: ToastrHelper ,private flierService: FlierService, private clientService: ClientService) {}
 
@@ -28,15 +29,16 @@ export class NewFlierComponent implements OnInit {
       let response;
       do {
         response = await this.clientService.get(filterFields);
-        console.log('response :', response);
         this.allClients.push(...response.data);
 
         filterFields.page++;
 
       } while (response.data.length > 0)
 
+      this.isLoading = false;
+
     } catch (err) {
-      this.toastr.showError('Erro ao listar as compras', 'Erro');
+      this.toastr.showError('Erro ao listar os clientes', 'Erro');
       throw err;
     }
   }

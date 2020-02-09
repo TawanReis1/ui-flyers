@@ -5,7 +5,7 @@
         </div>
 
         <ul class="list-unstyled components">
-            <li [ngClass]="{active: activeRoute('clients')}">
+            <li [ngClass]="{active: activeRoute('clients')}" *ngIf="userInformations?.data?.type == 'ADMIN'">
                 <a (click)="currentRoute('clients')" [routerLink]="['/clients']"><i class="fas fa-users m-r-10"></i>Clientes</a>
             </li>
             <li [ngClass]="{active: activeRoute('fliers')}">
@@ -30,6 +30,10 @@
                 <router-outlet></router-outlet>
             </div>
         </div>
+
+        <!-- <div id="footer">
+            <p>Rodapé</p>
+        </div> -->
     </div>
 </div>
 

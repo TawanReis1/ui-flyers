@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthorizeGuard implements CanActivate {
+    userType: any;
 
     constructor(private router: Router) { }
 

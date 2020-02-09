@@ -16,6 +16,22 @@ export class UserService {
     this.authInformations = JSON.parse(this.authInformations);
   }
 
+  async get(query) {
+    let params = new HttpParams();
+    Object.keys(query).forEach(param => {
+      params = params.append(param, query[param]);
+    });
+
+    return this.http.get(`${this.url}/user`, {
+      headers: new HttpHeaders({
+        "x-access-token": this.authInformations.accessToken
+      }),
+      params
+    }).toPromise()
+      .catch((err: HttpErrorResponse) => Promise.reject(err));
+  }
+
+
   async getById(id) {
     return this.http.get(`${this.url}/user/${id}`, {
       headers: new HttpHeaders({
