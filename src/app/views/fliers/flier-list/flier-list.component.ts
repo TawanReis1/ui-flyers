@@ -159,8 +159,9 @@ export class FlierListComponent implements OnInit {
       text: 'Você não será capaz de reverter isso!',
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       cancelButtonColor: '#6C757D',
-      confirmButtonColor: '#159588',
+      confirmButtonColor: '#8B0000',
       confirmButtonText: 'Sim, apague!',
       reverseButtons: true
 
@@ -173,7 +174,31 @@ export class FlierListComponent implements OnInit {
           });
         swal(
           'Apagado!',
-          'O Panfleto foi apagado com sucesso.',
+          'A campanha foi apagada com sucesso.',
+          'success'
+        );
+      }
+    });
+  }
+
+  async updateAdvancePayment(id) {
+    swal({
+      title: 'Você tem certeza?',
+      text: 'Ao confirmar, você estará solicitando o adiantamento do pagamento',
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#6C757D',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#159588',
+      confirmButtonText: 'Sim, solicite!',
+      reverseButtons: true
+
+    }).then((result) => {
+      if (result.value) {
+        this.flierService.update({status: "ADVANCE_PAYMENT"}, id);
+        swal(
+          'Solicitado!',
+          'A solicitação foi realizada com sucesso.',
           'success'
         );
       }

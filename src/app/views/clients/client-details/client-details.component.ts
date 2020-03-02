@@ -45,6 +45,7 @@ export class ClientDetailsComponent implements OnInit {
       type: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#6C757D',
+      cancelButtonText: 'Cancelar',
       confirmButtonColor: '#159588',
       confirmButtonText: 'Sim, apague!',
       reverseButtons: true

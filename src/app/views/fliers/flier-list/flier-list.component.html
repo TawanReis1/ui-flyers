@@ -1,14 +1,15 @@
 <div class="row">
-    <div class="col-lg-12">
-        <!-- <h3 class="pull-left">Clientes</h3> -->
-        <button type="button" *ngIf="userInformations?.data?.type == 'ADMIN' && !isLoading" class="btn btn-primary pull-right" (click)="changeScreen('new')">
-            <i class="fas fa-plus m-r-10"></i>Novo Panfleto
-        </button>
-        <!-- <button type="button" class="btn btn-primary pull-right m-r-10" (click)="changeScreen('cashback')">
+  <div class="col-lg-12">
+    <!-- <h3 class="pull-left">Clientes</h3> -->
+    <button type="button" *ngIf="userInformations?.data?.type == 'ADMIN' && !isLoading"
+      class="btn btn-primary pull-right" (click)="changeScreen('new')">
+      <i class="fas fa-plus m-r-10"></i>Nova Campanha
+    </button>
+    <!-- <button type="button" class="btn btn-primary pull-right m-r-10" (click)="changeScreen('cashback')">
                     <i class="fas fa-search m-r-10"></i>Consultar Cashback
                 </button> -->
-    </div>
-    <!-- <div class="col-lg-12">
+  </div>
+  <!-- <div class="col-lg-12">
                 <h3>Filtros</h3>
                 <div class="row">
                     <div class="col-lg-4">
@@ -48,55 +49,60 @@
                     </div>
                 </div>
             </div> -->
-    <app-loader class="full-size" [condition]="isLoading"></app-loader>
-    <div class="col-lg-12 m-t-30" *ngIf="allFliers.meta.totalItems > 0 && !isLoading">
-        <table class="table-bordered m-b-30" style="width: 100%;">
-            <thead>
-                <th style="width: 14%;">Nome</th>
-                <th style="width: 14%;">Status</th>
-                <th style="width: 14%;">Cliente</th>
-                <th style="width: 14%;">Criado em</th>
-                <th style="width: 14%;">Finalizado em</th>
-                <th style="width: 14%;">Display</th>
-                <th style="width: 16%;">Qtde. Total</th>
-                <th style="width: 16%;">Opções</th>
-            </thead>
-            <tbody *ngFor="let flier of allFliers.data; let i = index">
-                <td>{{flier?.name}}</td>
-                <td [ngSwitch]="flier?.status">
-                    <ng-container *ngSwitchCase="'IN_PROGRESS'">Em andamento</ng-container>
-                    <ng-container *ngSwitchCase="'PAUSED'">Pausado</ng-container>
-                    <ng-container *ngSwitchCase="'COMPLETED'">Finalizado</ng-container>
-                </td>
-                <td>{{flier?.clientId?.name}}</td>
-                <td>{{flier?.createdAt | date: 'dd/MM/yyyy HH:mm':'BRT'}}</td>
-                <td>
-                    <ng-container *ngIf="flier.concludedAt">
-                        {{flier?.concludedAt | date: 'dd/MM/yyyy HH:mm':'BRT'}}
-                    </ng-container>
-                    <ng-container *ngIf="!flier.concludedAt">
-                        -
-                    </ng-container>
-                </td>
-                <td>{{flier?.display}}</td>
-                <td>{{flier?.total}}</td>
-                <td>
-                    <button class="btn"><i class="fas fa-edit" (click)="enterDetails(flier._id)"></i></button>
-                    <button class="btn" style="color: red;" (click)="deleteFlier(flier._id, i)"><i
-                            class="fas fa-trash"></i></button>
-                </td>
-            </tbody>
-        </table>
-        <div class="col-12 center-content">
-            <ngb-pagination [rotate]="true" maxSize="5" [collectionSize]="allFliers.meta.totalItems" [(page)]="page"
-                pageSize="10" (pageChange)="changePage($event)">
-            </ngb-pagination>
-        </div>
-    </div>
+  <app-loader class="full-size" [condition]="isLoading"></app-loader>
+  <div class="col-lg-12 m-t-30" *ngIf="allFliers.meta.totalItems > 0 && !isLoading">
+    <table class="table-bordered m-b-30" style="width: 100%;">
+      <thead>
+        <th style="width: 14%;">Nome</th>
+        <th style="width: 14%;">Status</th>
+        <th style="width: 14%;">Cliente</th>
+        <th style="width: 14%;">Criado em</th>
+        <th style="width: 14%;">Finalizado em</th>
+        <th style="width: 14%;">Display</th>
+        <th style="width: 16%;">Qtde. Total</th>
+        <th style="width: 16%;">Opções</th>
+      </thead>
+      <tbody *ngFor="let flier of allFliers.data; let i = index">
+        <td>{{flier?.name}}</td>
+        <td [ngSwitch]="flier?.status">
+          <ng-container *ngSwitchCase="'IN_PROGRESS'">Em andamento</ng-container>
+          <ng-container *ngSwitchCase="'ADVANCE_PAYMENT'">Adiantamento de Pagamento</ng-container>
+          <ng-container *ngSwitchCase="'PAUSED'">Pausado</ng-container>
+          <ng-container *ngSwitchCase="'COMPLETED'">Finalizado</ng-container>
+        </td>
+        <td>{{flier?.clientId?.name}}</td>
+        <td>{{flier?.createdAt | date: 'dd/MM/yyyy HH:mm':'BRT'}}</td>
+        <td>
+          <ng-container *ngIf="flier.concludedAt">
+            {{flier?.concludedAt | date: 'dd/MM/yyyy HH:mm':'BRT'}}
+          </ng-container>
+          <ng-container *ngIf="!flier.concludedAt">
+            -
+          </ng-container>
+        </td>
+        <td>{{flier?.display}}</td>
+        <td>{{flier?.total}}</td>
+        <td class="btn-group">
+          <button class="btn" title="Editar Campanha"><i class="fas fa-edit"
+              (click)="enterDetails(flier._id)"></i></button>
+          <button class="btn" title="Solicitar adiatamento de pagamento" style="color: green;"
+            (click)="updateAdvancePayment(flier._id)" [disabled]="flier.status === 'ADVANCE_PAYMENT'"><i class="fas fa-dollar-sign"></i></button>
+          <button class="btn" title="Apagar Campanha" style="color: red;" (click)="deleteFlier(flier._id, i)"><i
+              class="fas fa-trash"></i></button>
 
-    <div class="col-lg-12 m-t-30 center-content" *ngIf="allFliers.meta.totalItems === 0 && !isLoading">
-        <h4 style="color: red;">Não existem nenhum panfleto cadastrado</h4>
+        </td>
+      </tbody>
+    </table>
+    <div class="col-12 center-content">
+      <ngb-pagination [rotate]="true" maxSize="5" [collectionSize]="allFliers.meta.totalItems" [(page)]="page"
+        pageSize="10" (pageChange)="changePage($event)">
+      </ngb-pagination>
     </div>
+  </div>
+
+  <div class="col-lg-12 m-t-30 center-content" *ngIf="allFliers.meta.totalItems === 0 && !isLoading">
+    <h4 style="color: red;">Não existem nenhuma campanha cadastrada</h4>
+  </div>
 
 
 </div>

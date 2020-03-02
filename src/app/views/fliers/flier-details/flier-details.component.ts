@@ -78,7 +78,7 @@ export class FlierDetailsComponent implements OnInit {
 
 
     } catch (err) {
-      this.toastr.showError('Erro ao recuperar o panfleto', 'Erro');
+      this.toastr.showError('Erro ao recuperar a campanha', 'Erro');
       throw err;
     }
   }
@@ -100,14 +100,14 @@ export class FlierDetailsComponent implements OnInit {
 
       await this.flierService.update(acumData, this.id);
 
-      this.toastr.showSuccess('Panfleto atualizado com sucesso', 'Sucesso');
+      this.toastr.showSuccess('Campanha atualizada com sucesso', 'Sucesso');
       this.router.navigate(['/fliers'])
 
     } catch (err) {
       if (err.treated_error) {
         this.toastr.showError(err.message, 'Erro');
       } else {
-        this.toastr.showError('Erro ao atualizar o panfleto', 'Erro');
+        this.toastr.showError('Erro ao atualizar a campanha', 'Erro');
       }
 
       throw err;

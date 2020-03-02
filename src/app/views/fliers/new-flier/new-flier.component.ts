@@ -47,7 +47,7 @@ export class NewFlierComponent implements OnInit {
     try {
       await this.flierService.create(this.flier);
 
-      this.toastr.showSuccess('Panfleto cadastrado com sucesso!', 'Sucesso');
+      this.toastr.showSuccess('Campanha cadastrada com sucesso!', 'Sucesso');
       this.router.navigate(['/fliers']);
 
       return;

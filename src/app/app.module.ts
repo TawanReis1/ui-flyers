@@ -24,6 +24,9 @@ import { LoginComponent } from './views/login/login.component';
 import { AuthorizeGuard } from './shared/security/authorize-guard';
 import { LoaderComponent } from './shared/helpers/loader/loader.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { NewPaymentComponent } from './views/payments/new-payment/new-payment/new-payment.component';
+import { PaymentEditComponent } from './views/payments/payment-edit/payment-edit/payment-edit.component';
+import { PaymentListComponent } from './views/payments/payment-list/payment-list/payment-list.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 registerLocaleData(localePt)
@@ -38,7 +41,10 @@ registerLocaleData(localePt)
     NewFlierComponent,
     LoginComponent,
     NavbarComponent,
-    LoaderComponent
+    LoaderComponent,
+    NewPaymentComponent,
+    PaymentEditComponent,
+    PaymentListComponent
   ],
   imports: [
     BrowserModule,
