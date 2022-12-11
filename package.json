@@ -30,7 +30,7 @@
     "@angular/router": "~8.2.5",
     "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "bootstrap": "4.3.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jwt-decode": "2.2.0",
     "moment": "^2.24.0",
     "ng2-date-picker": "^2.12.0",
